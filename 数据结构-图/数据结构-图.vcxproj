@@ -154,12 +154,14 @@
     <ClCompile Include="GraphLJB.cpp" />
     <ClCompile Include="GraphLJZ.cpp" />
     <ClCompile Include="GraphSZLB.cpp" />
+    <ClCompile Include="Queue.cpp" />
     <ClCompile Include="数据结构-图.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphLJB.h" />
     <ClInclude Include="GraphLJZ.h" />
     <ClInclude Include="GraphSZLB.h" />
+    <ClInclude Include="Queue.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

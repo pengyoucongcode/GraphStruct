@@ -1,10 +1,12 @@
 #include "GraphLJZ.h"
+#include "Queue.h"
 
 GraphLJZ::GraphLJZ(int num1, int num2)
 {
 	vexnum = num1;
 	arcnum = num2;
 	vexs = new char[vexnum];
+	visit = new bool[vexnum];
 	int temp = vexnum;
 	arcs = new int* [temp];
 	for (int i = 0; i < temp; i++)
@@ -16,7 +18,11 @@ void GraphLJZ::Init()
 	int i, k;
 	cout << "请按顺序输入顶点信息：";
 	for (i = 0; i < vexnum; i++)
+	{
 		cin >> vexs[i];       //依次输入点的信息
+		visit[i] = false;
+	}
+	vexs[i] = '\0';
 	for (i = 0; i < vexnum; i++)
 		for (k = 0; k < vexnum; k++)
 			arcs[i][k] = MinInt;       //初始化邻接矩阵，边的权值均设置为最小值0
@@ -56,8 +62,8 @@ void GraphLJZ::Create()
 	}
 }
 
-//以深度优先搜索遍历图
-int GraphLJZ::Traver()
+//输出图
+int GraphLJZ::Print()
 {
 	int i, j;
 	cout << "图的邻接矩阵为：" << endl;
@@ -83,4 +89,43 @@ int GraphLJZ::Traver()
 					return count;
 			}
 		}
+}
+//广度优先搜索遍历图
+void GraphLJZ::BFS(int num)
+{
+	int temp=0;
+	Queue q(vexnum);
+	visit[num] = true;
+	cout << vexs[num] << " ";
+	q.Enqueue(num);
+	while (!q.Empty())
+	{
+		int w;
+		q.GetTop(w);
+		q.Dequeue(temp);
+		for(int u=0;u<vexnum;u++)
+			if (arcs[w][u] != 0 && visit[u] == false)
+			{
+				cout << vexs[u] << " ";
+				q.Enqueue(u);
+				visit[u] = true;
+			}
+	}
+	cout << endl;
+	RedeafultVisit();
+}
+//恢复访问标志表的默认设置
+void GraphLJZ::RedeafultVisit()
+{
+	for (int i = 0; i < vexnum; i++)
+		visit[i] = false;
+}
+//深度优先搜索遍历图
+void GraphLJZ::DFS(int v)
+{
+	cout << vexs[v]<<" ";
+	visit[v] = true;
+	for (int w = 0; w < vexnum; w++)
+		if (arcs[v][w] != 0 && visit[w] == false)
+			DFS(w);
 }

@@ -85,7 +85,7 @@ void GraphSZLB::Create()
 	}
 }
 //遍历图
-void GraphSZLB::Traver()
+void GraphSZLB::Print()
 {
 	int i;
 	cout << "各个顶点的出度信息：" << endl;

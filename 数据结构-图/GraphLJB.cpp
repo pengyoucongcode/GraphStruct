@@ -1,4 +1,5 @@
 #include "GraphLJB.h"
+#include "Queue.h"
 #include <iostream>
 using namespace std;
 
@@ -8,6 +9,7 @@ GraphLJB::GraphLJB(int node, int line)
 	vexNum = node;
 	arcNum = line;
 	vertices = new VexNode[vexNum];
+	visit = new bool[vexNum];
 }
 //初始化顶点表
 void GraphLJB::initializeTheVertexTable()
@@ -17,6 +19,7 @@ void GraphLJB::initializeTheVertexTable()
 	{
 		cin >> vertices[i].data;
 		vertices[i].theArc = NULL;
+		visit[i] = false;
 	}
 }
 //获取顶点的序号
@@ -68,8 +71,8 @@ void GraphLJB::Create()
 		}
 	}
 }
-//以深度优先搜索遍历图
-void GraphLJB::DFS_AL()
+//输出图的边
+void GraphLJB::Print()
 {
 	int i;
 	cout << "图的邻接表为：" << endl;
@@ -82,5 +85,50 @@ void GraphLJB::DFS_AL()
 			cout << vertices[i].data << "->" << vertices[now->adjvex].data << ":" << now->length << endl;
 			now = now->nextArc;
 		}
+	}
+}
+//广度优先搜索遍历图
+void GraphLJB::BFS(int v)
+{
+	int temp;
+	Queue q(vexNum);
+	cout << vertices[v].data << " ";
+	visit[v] = true;
+	q.Enqueue(v);
+	while (!q.Empty())
+	{
+		int w;
+		q.GetTop(w);
+		q.Dequeue(temp);
+		for (ArcNode* u = vertices[w].theArc; u != NULL; u = u->nextArc)
+		{
+			if (visit[u->adjvex] == false)
+			{
+				cout << vertices[u->adjvex].data << " ";
+				q.Enqueue(u->adjvex);
+				visit[u->adjvex] = true;
+			}
+		}
+	}
+	cout << endl;
+	RedeafultVisit();
+}
+void GraphLJB::RedeafultVisit()
+{
+	for (int i = 0; i < vexNum; i++)
+		visit[i] = false;
+}
+//深度优先搜索遍历图
+void GraphLJB::DFS(int v)
+{
+	cout << vertices[v].data << " ";
+	visit[v] = true;
+	ArcNode* p = vertices[v].theArc;
+	while (p != NULL)
+	{
+		int w = p->adjvex;
+		if (visit[w] == false)
+			DFS(w);
+		p = p->nextArc;
 	}
 }

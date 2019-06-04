@@ -26,5 +26,5 @@ public:
 	void Init();
 	int LocateVex(char node);
 	void Create();
-	void Traver();
+	void Print();
 };
